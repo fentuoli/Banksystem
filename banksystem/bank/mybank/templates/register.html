@@ -1,0 +1,53 @@
+{% extends "./base.html" %}
+{% block content %}
+<div class="container" style="width: 500px;margin-top: 20px">
+    <form action="/client/" method="post" class="form-login">
+            {% csrf_token %}
+            <h1 class="text-center">Register</h1>
+            <div class="input-group">
+                <span class="input-group-addon">身份证号:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">姓名:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">电话号码:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">地址:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">联系人姓名:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">联系人电话号码:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">联系人邮箱:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">联系人关系:</span>
+                <input type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">密码:</span>
+                <input type="text" class="form-control">
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,381 @@
+{% extends "./base.html" %}
+{% block content %}
+<script>$('select').selectpicker();</script>
+<div class="col-md-4 col-md-offset-4">
+    {% if default %}
+    <form  class="form-horizontal" role="form" action="/mybank/{{page}}/{{default.id}}/a_alter/" method="post" class="form-group">
+        {% else %}
+        <form action="/mybank/{{page}}/a_alter/" method="post" class="form-group">
+            {% endif %}
+            {% csrf_token %}
+            
+            {% if page == 'employee' %}
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">身份证号:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="id" value='{{default.id}}'>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">姓名:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="empname" value="{{default.empname}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属部门:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="department">
+                        {% for i in department %}
+                            {% if department_id == i.id %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电话号码:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="empphone" value="{{default.empphone}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">地址:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="empaddr" value="{{default.empaddr}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">工作日期:</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="empstart" value="{{default.empstart|date:"c"}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"> 密码:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" value="{{default.password}}"><br>
+                </div>
+            </div>
+            <br>
+            <br>
+            {% elif page == 'client' %}
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">身份证号:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="id" value="{{default.id}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">姓名:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="name" value="{{default.name}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">电话号码:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="phone" value="{{default.phone}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">地址:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" value="{{default.address}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">负责人:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="empID">
+                        {% for i in employee %}
+                            <option value="{{i.empname}}">{{i.empname}}</option>
+                        {% endfor %}
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">服务类型:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="servicetype">
+                        <option value="Loan">Loan</option>
+                        <option value="Account">Account</option>
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">联系人姓名:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="contact_name" value="{{default.contact_name}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">联系人电话号码:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="contact_phone" value="{{default.contact_phone}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">联系人邮箱:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="contact_email" value="{{default.contact_email}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">联系人关系:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="relation" value="{{default.relation}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"> 密码:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" value="{{default.password}}"><br>
+                </div>
+            </div>
+            <br>
+            <br>
+            {% elif page == 's_account' %}
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">开户支行:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="branch_id">
+                        {% for i in branches %}
+                            {% if i in default.customers.all %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">账户所有者:</label>
+                <div class="col-sm-10">
+                    <select name="owners" class="selectpicker form-control" multiple>
+                        {% for i in owners %}
+                            {% if i in default.owners.all %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">余额:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="left_money" value="{{default.left_money}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">创建时间:</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" class="form-control" name="creation_time" value="{{default.creation_time|date:"Y-m-d h:i"}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">最后访问日期:</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" class="form-control" name="visit_time" value="{{default.visit_time|date:"Y-m-d h:i"}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">利率:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.01" name="interest_rate" value="{{default.interest_rate}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">货币类型:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="currency_type" value="{{default.currency_type}}"><br>
+                </div>
+            </div>
+            <br>
+            <br>
+            {% elif page == 'c_account' %}
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">开户支行:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="branch_id">
+                        {% for i in branches %}
+                            {% if default.branch.id == i.id %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">账户所有者:</label>
+                <div class="col-sm-10">
+                    <select name="owners" class="selectpicker form-control" multiple>
+                        {% for i in owners %}
+                            {% if i in default.owners.all %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select> <br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">余额:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="left_money" value="{{default.left_money}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">创建时间:</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" class="form-control" name="creation_time" value="{{default.creation_time|date:"Y-m-d h:i"}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">最后访问日期:</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" class="form-control" name="visit_time" value="{{default.visit_time|date:"Y-m-d h:i"}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">透支额:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="overdraw" value="{{default.overdraw}}"><br>
+                </div>
+            </div>
+            <br>
+            <br>
+            {% elif page == 'loan' %}
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">开户支行:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="branch_id">
+                        {% for i in branches %}
+                            {% if default.branch.id == i.id %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">贷款所有者:</label>
+                <div class="col-sm-10">
+                    <select name="customer_id" class="selectpicker form-control" multiple="multiple">
+                        {% for i in owners %}
+                            {% if i in default.customers.all %}
+                                <option selected value="{{i.id}}">{{i}}</option>
+                            {% else %}
+                                <option value="{{i.id}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">贷款申请时间:</label>
+                <div class="col-sm-10">
+                    <input type="datetime" class="form-control" name="date" value="{{default.date}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">贷款总量:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="amount" value="{{default.amount}}"><br>
+                </div>
+            </div>
+            {% if default %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">支付情况:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="count" value="{{default.count}}"><br>
+                </div>
+            </div>
+            {% endif %}
+            <table class="table table-hover table-sm">
+                <tr>
+                    <th>贷款号</th>
+                    <th>金额</th>
+                    <th>日期</th>
+                </tr>
+                {% for i in pays %}
+                <tr>
+                    {% if i.loan.id == default.id %}
+                    <td>{{i.loan.id}}</td>
+                    <td>{{i.amount}}</td>
+                    <td>{{i.date}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <tr><a href="/mybank/{{page}}/{{default.id}}/addpay/" class="btn btn-primary btn-sm">增加付款</a></tr>
+            </table>
+            {% if default.count <= 0.0 %}
+            <tr>未开始发放</tr>
+            {% elif default.count < default.amount %}
+            <tr>发放中</tr>
+            {% else %}
+            <tr>已全部发放</tr>
+            <br>
+            <br>
+            {% endif %}
+            {% elif page == 'loanpay' %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">贷款号:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="loan_id" value="{{loan_id}}"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">金额:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="amount"><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">日期:</label>
+                <div class="col-sm-10">
+                    <input type="datetime" class="form-control" name="date"><br>
+                </div>
+            </div>
+            <br>
+            <br>
+            {% endif %}
+            <br>
+            {% if page != 'loan' or not default%}
+            <input type="submit" value="保存" class="btn btn-primary">
+            {% endif %}
+            {% if page != 'employee' and page != 'loanpay' %}
+            <a href="/mybank/{{page}}/" class="btn btn-primary">返回</a>
+            {% elif page == 'employee' %}
+            <a href="/mybank/client/" class="btn btn-primary">返回</a>
+            {% endif %}
+        </form>
+</div>
+{% endblock %}

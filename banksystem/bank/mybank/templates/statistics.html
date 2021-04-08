@@ -1,0 +1,63 @@
+{% extends "./base.html" %}
+
+{% block title %}业务分析{% endblock %}
+
+{% block header %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script> -->
+{% endblock %}
+
+{% block content %}
+<form action="/mybank/statistics/" method="GET" class="form-group">
+    <input style="margin-left: 300px" type="radio" name="frequency" value="year" checked="checked" onclick="freqChanged(0)">年</input>
+    <input type="radio" name="frequency" value="month" onclick="freqChanged(1)">月</input>
+    <input type="radio" name="frequency" value="season" onclick="freqChanged(2)">季</input>
+    <input type="date" name="start_date" value="2010-06-30">
+    <input type="date" name="end_date" value="2020-06-30">
+    <input type="submit">
+</form>
+
+{% if n_acc and m_acc %}
+    注册账户数：{{n_acc}}<br>
+    总储蓄额：{{m_acc}}<br>
+{% endif %}
+{% if n_loa and m_loa %}
+    贷款发放数：{{n_loa}}<br>
+    发放贷款金额：{{m_loa}}<br>
+{% endif %}
+<div class="container" style="width: 1500px;margin-left: 300px">
+<h4>账户:</h4>
+<table class="table table-hover table-sm">
+<tr><th>支行</th><th>月份</th><th>金额</th><th>账户数</th></tr>
+{% for i in account %}
+<tr><td>{{i.branch}}</td><td>{{i.month|date:"Y-m"}}</td><td>{{i.m}}</td><td>{{i.n}}</td></tr>
+{% endfor %}
+</table>
+<h4>贷款申请情况:</h4>
+<table class="table table-hover table-sm">
+<tr><th>支行</th><th>月份</th><th>贷款总金额</th><th>贷款数</th></tr>
+{% for i in amount %}
+<tr><td>{{i.branch}}</td><td>{{i.month|date:"Y-m"}}</td><td>{{i.m}}</td><td>{{i.n}}</td></tr>
+{% endfor %}
+</table>
+<h4>贷款支付情况:</h4>
+<table class="table table-hover table-sm">
+<tr><th>月份</th><th>贷款总付款金额</th><th>发放付款数</th></tr>
+{% for i in payamount %}
+<tr><td>{{i.month|date:"Y-m"}}</td><td>{{i.m}}</td><td>{{i.n}}</td></tr>
+{% endfor %}
+</table>
+</div>
+
+<div class="container" style="width: 1200px;height: 400px;margin-left: 300px">
+<canvas id="myChart"></canvas>
+</div>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {{ data|safe }}
+    })
+</script>
+
+{% endblock %}

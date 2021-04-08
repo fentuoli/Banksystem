@@ -1,0 +1,181 @@
+{% extends "./base.html" %}
+{% block content %}
+<br>
+<br>
+{% if page == 'client' %}
+    <h1 style="margin-left: 885px">用户操作界面</h1>
+    <br>
+    <a href="/mybank/{{page}}/add/" class="btn btn-primary" style="margin-left: 950px;"> 增加新项目 </a>
+{% elif page == 's_account' %}
+    <h1 style="margin-left: 870px">储蓄账户操作界面</h1>
+    <br>
+    <a href="/mybank/{{page}}/add/" class="btn btn-primary" style="margin-left: 950px;"> 增加新项目 </a>
+{% elif page == 'c_account' %}
+    <h1 style="margin-left: 870px">支票账户操作界面</h1>
+    <br>
+    <a href="/mybank/{{page}}/add/" class="btn btn-primary" style="margin-left: 950px;"> 增加新项目 </a>
+{% elif page == 'loan' %}
+    <h1 style="margin-left: 900px">贷款操作界面</h1>
+    <br>
+    <a href="/mybank/{{page}}/add/" class="btn btn-primary" style="margin-left: 950px;"> 增加新项目 </a>
+{% endif %}
+{% if iters %}
+<form action=/mybank/{{page}}/ method="GET" class="form-group">
+    <div style="margin-left: 300px;margin-right: 100px;">
+    <table class="table table-striped">
+    {% if page == 'client' %}
+    <div class="container" style="width: 500px;margin-top: 20px">
+        <div class="input-group">
+            <span class="input-group-addon">按身份证号查询:</span>
+            <input type="text" class="form-control" name="q1">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按姓名查询:</span>
+            <input type="text" class="form-control" name="q2">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按电话查询:</span>
+            <input type="text" class="form-control" name="q3">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按地址查询:</span>
+            <input type="text" class="form-control" name="q4">
+        </div>
+        <br>
+        <input style="margin-left: 200px"; type="submit" value="提交" class="btn btn-primary">
+        <br>
+        <br>
+    </div>
+        <tr><th>身份证号</th><th>姓名</th><th>电话号码</th><th>地址</th>
+        <th>负责人</th><th>服务类型</th><th>联系人姓名</th><th>联系人电话号码</th>
+        <th>联系人邮箱</th><th>联系人关系</th><th></th><th></th></tr>
+        {% for iter in iters %}
+            <tr><td>{{iter.id}}</td><td>{{iter.name}}</td>
+                <td>{{iter.phone}}</td><td>{{iter.address}}</td>
+                {% for i in service %}
+                {% if i.cusID.id == iter.id %}
+                <td><a href="/mybank/employee/{{i.empID.id}}/" class="stretched-link">{{i.empID.empname}}</a></td>
+                <td>{{i.servicetype}}</td>
+                {% endif %}
+                {% endfor %}
+                <td>{{iter.contact_name}}</td><td>{{iter.contact_phone}}</td>
+                <td>{{iter.contact_email}}</td><td>{{iter.relation}}</td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/" class="btn btn-primary">修改</a>
+                </td><td><a href="/mybank/{{page}}/{{iter.id}}/delete/" class="btn btn-primary">删除</a></td></tr>
+        {% endfor %}
+    </table>
+    </div>
+</form>
+    {% elif page == 's_account' %}
+        <div class="container" style="width: 500px;margin-top: 20px">
+            <div class="input-group">
+                <span class="input-group-addon">按账号查询:</span>
+                <input type="text" class="form-control" name="q1">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">按账户所在银行查询:</span>
+                <input type="text" class="form-control" name="q2">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">按账户所有者查询:</span>
+                <input type="text" class="form-control" name="q3">
+            </div>
+            <br>
+            <input style="margin-left: 200px"; type="submit" value="提交" class="btn btn-primary">
+            <br>
+            <br>
+        </div>
+        <tr><th>账户号</th><th>开户支行</th><th>账户所有者</th>
+            <th>余额</th><th>创建时间</th><th>最后访问日期</th><th>利率</th>
+            <th>货币类型</th><th></th><th></th></tr>
+        {% for iter in iters %}
+            <tr><td>{{iter.id}}</td><td>{{iter.branch.bankname}}</td>
+                <td>{% for i in iter.owners.all %}{{i.name}}<br>{% endfor %}</td>
+                <td>{{iter.left_money|floatformat:2}}</td>
+                <td>{{iter.creation_time}}</td><td>{{iter.visit_time}}</td>
+                <td>{{iter.interest_rate}}</td><td>{{iter.currency_type}}</td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/" class="btn btn-primary">修改</a></td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/delete/" class="btn btn-primary">删除</a></td></tr>
+        {% endfor %}
+    </table>
+    </div>
+</form>
+    {% elif page == 'c_account' %}
+    <div class="container" style="width: 500px;margin-top: 20px">
+        <div class="input-group">
+            <span class="input-group-addon">按账号查询:</span>
+            <input type="text" class="form-control" name="q1">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按所在支行查询:</span>
+            <input type="text" class="form-control" name="q2">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按账户所有者查询:</span>
+            <input type="text" class="form-control" name="q3">
+        </div>
+        <br>
+        <input style="margin-left: 200px"; type="submit" value="提交" class="btn btn-primary">
+        <br>
+        <br>
+    </div>
+        <tr><th>账户号</th><th>开户支行</th><th>账户所有者</th>
+            <th>余额</th><th>创建时间</th><th>最后访问日期</th><th>透支额</th><th></th><th></th></tr>
+        {% for iter in iters %}
+            <tr><td>{{iter.id}}</td><td>{{iter.branch.bankname}}</td>
+                <td>{% for i in iter.owners.all %}{{i.name}}<br>{% endfor %}</td>
+                <td>{{iter.left_money|floatformat:2}}</td><td>{{iter.creation_time}}</td>
+                <td>{{iter.visit_time}}</td><td>{{iter.overdraw}}</td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/" class="btn btn-primary">修改</a></td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/delete/" class="btn btn-primary">删除</a></td></tr>
+        {% endfor %}
+    </table>
+    </div>
+    </form>
+    {% elif page == 'loan' %}
+    <div class="container" style="width: 500px;margin-top: 20px">
+        <div class="input-group">
+            <span class="input-group-addon">按贷款号查询:</span>
+            <input type="text" class="form-control" name="q1">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按所在支行查询:</span>
+            <input type="text" class="form-control" name="q2">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">按贷款所有者查询:</span>
+            <input type="text" class="form-control" name="q3">
+        </div>
+        <br>
+        <input style="margin-left: 200px"; type="submit" value="提交" class="btn btn-primary">
+        <br>
+        <br>
+    </div>
+        <tr><th>贷款号</th><th>开户支行</th><th>贷款所有者</th>
+            <th>申请时间</th><th>贷款总量</th><th>支付情况</th><th></th>
+            <th></th></tr>
+        {% for iter in iters %}
+            <tr><td>{{iter.id}}</td><td>{{iter.branch.bankname}}</td>
+                <td>{% for i in iter.customers.all %}{{i.name}}<br>{% endfor %}</td>
+                <td>{{iter.date}}</td><td>{{iter.amount|floatformat:2}}</td><td>{{iter.count}}</td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/" class="btn btn-primary">详情</a></td>
+                <td><a href="/mybank/{{page}}/{{iter.id}}/delete/" class="btn btn-primary">删除</a></td></tr>
+        {% endfor %}
+    </table>
+</div>
+</form>
+
+    {% else %}
+        <p>There are no items of {{page}} in this bank</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
